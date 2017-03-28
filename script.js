@@ -16,41 +16,40 @@ var shuffle = document.getElementById('shuffle');
 
 SC.initialize({client_id: 'fd4e76fc67798bfa742089ed619084a6'});
 
-// var scSong1 = new Song('/tracks/269161148');
-// theJukebox.addSong(scSong1);
-
-function SoundCloud() {
-  this.song = SC.stream('/tracks/269161148')
+function SoundCloud(source) {
+  this.source = '/tracks/'+source;
+  this.song = SC.stream('/tracks/'+source)
 }
 
 SoundCloud.prototype.play = function() {
   this.song.then(function(player){
     player.play();
   });
+  postTrackInfo(this);
 }
 
 SoundCloud.prototype.pause = function() {
   this.song.then(function(player){
     player.pause();
+    console.log(this.song)
   })
 }
 
-var scSong1 = new SoundCloud();
+// var scSong1 = new SoundCloud('244740422');
 
-play.addEventListener('click', function() {
-  scSong1.play();
-})
 
-pause.addEventListener('click', function() {
-  scSong1.pause();
-})
 
-SC.get(scSong1.source).then(function(response) {
-  console.log(response);
-  title.innerHTML = response.title.split("-")[1];
-  artist.innerHTML = response.title.split("-")[0];
-  cover.setAttribute('src', response.artwork_url);
-})
+
+
+
+function postTrackInfo(track) {
+  SC.get(track.source).then(function(response) {
+    console.log(response);
+    title.innerHTML = response.title.split("-")[1];
+    artist.innerHTML = response.title.split("-")[0];
+    cover.setAttribute('src', response.artwork_url);
+  })
+}
 
 function formReset() {
   searchForm.reset();
@@ -65,9 +64,35 @@ function search(searchValue){
       searchResults.removeChild(searchResults.firstChild);
     }
     for(x=0; x<response.length; x++) {
-      var result = document.createElement('img');
-      result.setAttribute('src', response[x].artwork_url);
-      searchResults.appendChild(result);
+      var li = document.createElement('li');
+      var img = document.createElement('img');
+      img.setAttribute('src', response[x].artwork_url);
+      img.className = 'resultImgs';
+      img.setAttribute('id', "index_"+(x));
+      searchResults.appendChild(li);
+      li.appendChild(img);
+      li.appendChild(document.createElement('span')).innerHTML = '<br>Artist: '+response[x].title.split('-')[0]+"<br>Title: "+response[x].title.split('-')[1];
+    }
+
+    var trackList = document.getElementsByTagName('li');
+    console.log(trackList.length);
+    for(x=0; x<trackList.length; x++) {
+      var index = x;
+      trackList[x].addEventListener('click', function(e) {
+        var target = e.target;
+        var getId = target.id.split('_')[1];
+        console.log(response[getId].id)
+        var scSong1 = new SoundCloud(response[getId].id);
+        scSong1.play();
+
+        pause.addEventListener('click', function() {
+          scSong1.pause();
+        })
+
+        play.addEventListener('click', function() {
+          scSong1.play();
+        })
+      })
     }
   })
 }
