@@ -1,5 +1,7 @@
 var title = document.querySelector('#title');
+var titleLink = document.querySelector('#titleLink');
 var artist = document.querySelector('#artist');
+var artistLink = document.querySelector('#artistLink');
 var cover = document.querySelector('#cover');
 var searchResults = document.querySelector('#searchResults');
 var searchSubmit = document.querySelector('#searchSubmit');
@@ -35,18 +37,13 @@ SoundCloud.prototype.pause = function() {
   })
 }
 
-// var scSong1 = new SoundCloud('244740422');
-
-
-
-
-
-
 function postTrackInfo(track) {
   SC.get(track.source).then(function(response) {
     console.log(response);
     title.innerHTML = response.title.split("-")[1];
     artist.innerHTML = response.title.split("-")[0];
+    titleLink.setAttribute('href', response.permalink_url);
+    artistLink.setAttribute('href', response.permalink_url.split('/').slice(0,-1).join('/'))
     cover.setAttribute('src', response.artwork_url);
   })
 }
