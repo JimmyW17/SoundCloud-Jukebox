@@ -4,6 +4,16 @@
 
 #playlist-container {
   position: absolute;
-  right: 20px;
+  right: 60px;
   top: 20px;
+}
+
+#notes {
+  z-index: -1;
+  position: absolute;
+  top: 200px;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }

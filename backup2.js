@@ -35,6 +35,7 @@ var scSong1 = new SoundCloud();
 SoundCloud.prototype.play = function() {
   this.song.then(function(player) {
     player.play();
+    postTrackInfo(scSong1);
   })
 }
 
@@ -52,14 +53,6 @@ SoundCloud.prototype.pause = function() {
 pause.addEventListener('click', function() {
   scSong1.pause();
 })
-
-//Restart function
-SoundCloud.prototype.restart = function() {
-  this.song.then(function(player) {
-    player.currentTime = 0
-    scSong1.play();
-  })
-}
 
 //Search function
 function formReset() {
@@ -104,11 +97,43 @@ function search(searchValue){
         var getId = target.id.split('_')[1];
         // var scSong1 = new SoundCloud(response[getId].id);
         // scSong1.source = response[getId].id;
+        scSong1.source = response[getId].id;
         scSong1.song = SC.stream('/tracks/'+response[getId].id)
         // console.log(scSong1.song)
         scSong1.play();
-        scSong1.restart();
       })
     }
   })
 };
+
+// Track info stuff
+function postTrackInfo(track) {
+  // console.log(track.source)
+  SC.get('/tracks/'+track.source).then(function(response) {
+    // console.log(response);
+    object.innerHTML = response.id;
+    title.innerHTML = response.title.split("-")[1];
+    artist.innerHTML = response.title.split("-")[0];
+    titleLink.setAttribute('href', response.permalink_url);
+    artistLink.setAttribute('href', response.permalink_url.split('/').slice(0,-1).join('/'));
+    if (response.description == null) {
+      description.innerHTML = 'No description available';
+    } else {
+      description.innerHTML = response.description;
+    }
+    genre.innerHTML = response.genre.charAt(0).toUpperCase()+response.genre.slice(1);
+    if (response.release_year == null) {
+      year.innerHTML = 'Unknown';
+    } else {
+      year.innerHTML = response.release_year;
+    }
+
+    if(response.artwork_url) {
+      cover.setAttribute('src', response.artwork_url);
+    } else {
+      cover.src = 'http://vignette2.wikia.nocookie.net/pandorahearts/images/a/ad/Not_available.jpg/revision/latest?cb=20141028171337';
+      cover.style.height = '100px';
+      cover.style.width = '100px';
+    }
+  })
+}

@@ -30,16 +30,6 @@
     </div>
 
     <div id="playlist-container">
-      <div id="addAudio">
-        <h2>Add to Playlist:</h2>
-        <form onsubmit="formReset(); event.preventDefault();" action='index.html' method="post" id="audioForm">
-          <!-- line above, action='javascript:void(0);' makes it so that page doesn't reload on submit -->
-          <input type="text" name="Audio Source" placeholder="Source" id="audioInput" ><br>
-          <input type="text" name="Audio Name" placeholder="Title" id="audioName"><br>
-          <input type="submit" name="" value="Add" id="addButton"><br>
-          <!-- <input type="file" name="Upload" value="" id="upload"> -->
-        </form>
-      </div>
       <h2>Playlist:</h2>
       <ol id="playlist">
       </ol>
@@ -56,6 +46,11 @@
 
       </ol>
     </div>
+
+    <div id="notes">
+      <h2>search for a song, click on img to play,<br> click add to playlist button to not add to playlist,<br> add a few more songs, click the next button <br><br>next button doesnt rly work yet <br>pressing next until it goes back to first song doesnt <br> start it over like its supposed to, <br>it just resumes <br>dont bother pressing the prev or shuffle button</h2>
+    </div>
+
 
     <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
     <script src="script.js" charset="utf-8"></script>
