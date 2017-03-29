@@ -29,15 +29,17 @@ function Playlist() {
   this.playlistIndex = 0;
 }
 
+
 var scPlaylist = new Playlist();
 
 Playlist.prototype.add = function(song) {
   this.playlist.push(song);
-}
+};
 
 Playlist.prototype.remove = function(e) {
+  // NOT IMPLEMENTED
   var target = e.target;
-}
+};
 
 
 function SoundCloud(source) {
@@ -48,16 +50,16 @@ function SoundCloud(source) {
 
 SoundCloud.prototype.play = function() {
   // checks if player has played a song before
-  console.log(this.currentTime)
-  if(this.currenTime == 0) {
+  console.log(this.currentTime);
+  if(this.currenTime === 0) {
     var scSong1 = new SoundCloud(scPlaylist.playlist[scPlaylist.playlistIndex]);
     scSong1.song.then(function(player) {
       player.play();
-    })
+    });
   } else {
     this.song.then(function(player) {
       player.play();
-    })
+    });
   }
 
   // this.song.then(function(player){
@@ -65,16 +67,23 @@ SoundCloud.prototype.play = function() {
   //   console.log(player.currentTime());
   // });
   postTrackInfo(this);
-}
+};
 
 SoundCloud.prototype.pause = function() {
   this.song.then(function(player){
     player.pause();
-    console.log(this.song)
-  })
-}
+    console.log(this.song);
+  });
+};
+
+SoundCloud.prototype.stop = function() {
+  this.song.then(function(player) {
+    player.seek(0);
+  });
+};
 
 SoundCloud.prototype.next = function() {
+  this.stop();
   if(scPlaylist.playlistIndex == scPlaylist.playlist.length-1) {
     scPlaylist.playlistIndex = 0;
   } else {
@@ -84,7 +93,7 @@ SoundCloud.prototype.next = function() {
   this.currentTime = 0;
   console.log(this.currentTime);
   this.play();
-}
+};
 
 
 addToPlaylist.addEventListener('click', function() {
@@ -95,8 +104,8 @@ addToPlaylist.addEventListener('click', function() {
     var li = document.createElement('li');
     li.innerHTML = response.title.split('-')[1];
     playlist.appendChild(li);
-  })
-})
+  });
+});
 
 function postTrackInfo(track) {
   SC.get(track.source).then(function(response) {
@@ -106,13 +115,13 @@ function postTrackInfo(track) {
     artist.innerHTML = response.title.split("-")[0];
     titleLink.setAttribute('href', response.permalink_url);
     artistLink.setAttribute('href', response.permalink_url.split('/').slice(0,-1).join('/'));
-    if (response.description == null) {
+    if (response.description === null) {
       description.innerHTML = 'No description available';
     } else {
       description.innerHTML = response.description;
     }
     genre.innerHTML = response.genre.charAt(0).toUpperCase()+response.genre.slice(1);
-    if (response.release_year == null) {
+    if (response.release_year === null) {
       year.innerHTML = 'Unknown';
     } else {
       year.innerHTML = response.release_year;
@@ -125,7 +134,7 @@ function postTrackInfo(track) {
       cover.style.height = '100px';
       cover.style.width = '100px';
     }
-  })
+  });
 }
 
 function formReset() {
@@ -165,25 +174,25 @@ function search(searchValue){
       trackList[x].addEventListener('click', function(e) {
         var target = e.target;
         var getId = target.id.split('_')[1];
-        console.log(response[getId].id)
+        console.log(response[getId].id);
         var scSong1 = new SoundCloud(response[getId].id);
         scSong1.play();
         // addPlaylist(response[getId])
 
         pause.addEventListener('click', function() {
           scSong1.pause();
-        })
+        });
 
         play.addEventListener('click', function() {
           scSong1.play();
-        })
+        });
 
 
         next.addEventListener('click', function() {
           // Next button onclick
           scSong1.next();
-        })
-      })
+        });
+      });
 
       // function addPlaylist(trackID) {addToPlaylist.addEventListener('click', function(trackID) {
       //   scPlaylist.add(trackID);
@@ -192,10 +201,10 @@ function search(searchValue){
       // })
       //   }
     }
-  })
+  });
 }
 
 searchSubmit.addEventListener('click', function() {
   var searchValue = document.querySelector('#searchInput').value;
   search(searchValue);
-})
+});
