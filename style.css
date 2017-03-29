@@ -17,14 +17,23 @@ body {
   top: 20px;
 }
 
+#cover {
+  margin: 0 auto;
+  display: block;
+  width: 200px;
+}
+
 #notes {
   z-index: -1;
   position: absolute;
-  top: 200px;
+  bottom: 20px;
+  right: 10px;
   display: block;
   width: 100%;
+  margin-right: 10px;
   margin: 0 auto;
-  text-align: center;
+  text-align: right;
+  font-size: 10px;
 }
 
 #controls {
@@ -45,7 +54,7 @@ body {
 }
 
 #playlist-container {
-  position: fixed;
+  position: absolute;
   color: white;
   padding: 0px 20px 20px 20px;
   width: 20%;
