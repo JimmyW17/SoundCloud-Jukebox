@@ -43,7 +43,7 @@ body {
   /*background-color: black;*/
   color: white;
   position: fixed;
-  bottom: -10px;
+  bottom: 0px;
   margin: 0 auto;
   width: 100%;
 }
@@ -61,4 +61,8 @@ body {
   right: 20px;
   height: 100%;
   transition: .4s;
+}
+
+#info {
+  margin-left: 10px;
 }
