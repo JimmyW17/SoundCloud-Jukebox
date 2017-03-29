@@ -1,3 +1,9 @@
 #controls {
   font-size: 50px;
 }
+
+#playlist-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}

@@ -9,35 +9,55 @@
 <body>
 
   <div id="info">
+    <p id="object"></p>
     <p>Title: <a id="titleLink" target="_blank"><span id="title"></span></p></a>
     <p>Artist: <a id="artistLink" target="_blank"><span id="artist"></span></p></a>
+    <p>Genre: <span id="genre"></span></p>
+    <p>Release Year: <span id="year"></span></p>
+    <p>Description: <span id="description"></span></p>
     <p>Cover: <img src="" alt="" id="cover"></p>
+    <button type="button" name="button" id="addToPlaylist">Add to Playlist</button>
   </div>
   <audio id="jukebox">
     <source src="" type="audio/mpeg">
     </audio>
-  <div id="controls">
-    <i class="fa fa-step-backward" aria-hidden="true" id="previous"></i>
-    <i class="fa fa-random" aria-hidden="true" id="shuffle"></i>
-    <i class="fa fa-play-circle" aria-hidden="true" id="play"></i>
-    <i class="fa fa-pause-circle-o" aria-hidden="true" id="pause"></i>
-    <i class="fa fa-step-forward" aria-hidden="true" id="next"></i>
-  </div>
+    <div id="controls">
+      <i class="fa fa-step-backward" aria-hidden="true" id="previous"></i>
+      <i class="fa fa-random" aria-hidden="true" id="shuffle"></i>
+      <i class="fa fa-play-circle" aria-hidden="true" id="play"></i>
+      <i class="fa fa-pause-circle-o" aria-hidden="true" id="pause"></i>
+      <i class="fa fa-step-forward" aria-hidden="true" id="next"></i>
+    </div>
 
-  <div>
-    <form onsubmit="formReset(); event.preventDefault();" action="index.html" method="post" id="search">
-      <input type="text" name="" value="" id="searchInput">
-      <input type="submit" name="" value="Search" id="searchSubmit">
-    </form>
-  </div>
+    <div id="playlist-container">
+      <div id="addAudio">
+        <h2>Add to Playlist:</h2>
+        <form onsubmit="formReset(); event.preventDefault();" action='index.html' method="post" id="audioForm">
+          <!-- line above, action='javascript:void(0);' makes it so that page doesn't reload on submit -->
+          <input type="text" name="Audio Source" placeholder="Source" id="audioInput" ><br>
+          <input type="text" name="Audio Name" placeholder="Title" id="audioName"><br>
+          <input type="submit" name="" value="Add" id="addButton"><br>
+          <!-- <input type="file" name="Upload" value="" id="upload"> -->
+        </form>
+      </div>
+      <h2>Playlist:</h2>
+      <ol id="playlist">
+      </ol>
+    </div>
+    <div id="search-container">
+      <form onsubmit="formReset(); event.preventDefault();" action="index.html" method="post" id="search">
+        <input type="text" name="" value="" id="searchInput">
+        <input type="submit" name="" value="Search" id="searchSubmit">
+      </form>
+    </div>
 
-  <div>
-    <ol id="searchResults">
+    <div>
+      <ol id="searchResults">
 
-    </ol>
-  </div>
+      </ol>
+    </div>
 
-  <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
-  <script src="script.js" charset="utf-8"></script>
-</body>
-</html>
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
+    <script src="script.js" charset="utf-8"></script>
+  </body>
+  </html>
