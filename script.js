@@ -95,6 +95,20 @@ SoundCloud.prototype.next = function() {
   this.play();
 };
 
+SoundCloud.prototype.previous = function() {
+  this.stop();
+  if(scPlaylist.playlistIndex === 0) {
+    scPlaylist.playlistIndex = scPlaylist.playlist.length-1;
+  } else {
+    scPlaylist.playlistIndex -= 1;
+  }
+  // var scSong1 = new SoundCloud(scPlaylist.playlist[scPlaylist.playlistIndex]);
+  this.currentTime = 0;
+  console.log(this.currentTime);
+  this.play();
+};
+
+
 
 addToPlaylist.addEventListener('click', function() {
   scPlaylist.add(object.innerHTML);
@@ -192,6 +206,10 @@ function search(searchValue){
           // Next button onclick
           scSong1.next();
         });
+
+        previous.addEventListener('click', function() {
+          scSong1.previous();
+        })
       });
 
       // function addPlaylist(trackID) {addToPlaylist.addEventListener('click', function(trackID) {
